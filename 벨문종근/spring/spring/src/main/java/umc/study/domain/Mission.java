@@ -4,10 +4,7 @@ import lombok.*;
 import net.bytebuddy.asm.Advice;
 import umc.study.domain.common.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -26,4 +23,8 @@ public class Mission extends BaseEntity {
     private LocalDate deadline;
 
     private String missionSpec;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 }
