@@ -1,5 +1,6 @@
 package umc.study.service.MemberService;
 
+import jdk.jshell.Snippet;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import umc.study.domain.mapping.MemberPrefer;
 import umc.study.repository.FoodCategoryRepository;
 import umc.study.repository.MemberRepository;
 import umc.study.web.dto.MemberRequestDTO;
+import umc.study.apiPayload.code.status.ErrorStatus;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +36,7 @@ public class MemberCommandServiceImpl implements MemberCommandService{
         Member newMember = MemberConverter.toMember(request);
         List<FoodCategory> foodCategoryList = request.getPreferCategory().stream()
                 .map(category -> {
-                    return foodCategoryRepository.findById(category).orElseThrow(() -> new FoodCategoryHandler(Code.FOOD_CATEGORY_NOT_FOUND));
+                    return foodCategoryRepository.findById(category).orElseThrow(() -> new FoodCategoryHandler(ErrorStatus.FOOD_CATEGORY_NOT_FOUND));
                 }).collect(Collectors.toList());
 
         List<MemberPrefer> memberPreferList = MemberPreferConverter.toMemberPreferList(foodCategoryList);
